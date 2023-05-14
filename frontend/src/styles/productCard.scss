@@ -1,0 +1,18 @@
+.prdouct-card {
+    height: 250px;
+    width: 393px;
+    padding:10px 0 0 10px;
+    border: 2px solid black;
+
+    .name-container {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .name{
+        font-size: 18px;
+        font-weight: 400;
+    }
+}
