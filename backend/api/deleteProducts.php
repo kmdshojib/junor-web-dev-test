@@ -1,0 +1,42 @@
+<?php
+class DeleteAPI
+{
+    private $db;
+    private $product;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+        $this->product = new Product($db);
+    }
+
+    public function deleteProducts($data)
+    {
+        if (isset($data->ids) && is_array($data->ids)) {
+            $ids = $data->ids;
+
+            if ($this->product->deleteProducts($ids)) {
+                return array('message' => 'The products have been deleted successfully');
+            } else {
+                return array('message' => 'Something went wrong');
+            }
+        } else {
+            return array('message' => 'Invalid request. Please provide an array of valid product IDs.');
+        }
+    }
+}
+
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, X-Requested-With');
+
+include_once('../core/init.php');
+
+$productAPI = new DeleteAPI($db);
+
+$data = json_decode(file_get_contents('php://input'));
+
+$response = $productAPI->deleteProducts($data);
+
+echo json_encode($response);
