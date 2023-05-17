@@ -1,15 +1,18 @@
 import React from 'react'
 import '../../styles/headerContainer.scss'
-const Header = () => {
+const Header = ({ children }) => {
+
   return (
-    <div className='header-container'>
-      <div>
-        <h2>Product List</h2>
+    <div>
+      <div className='header-container'>
+        <div>
+          <h2>Product List</h2>
+        </div>
+        <div className='btn-container'>
+          {children}
+        </div>
       </div>
-      <div>
-        <button>Add</button>
-        <button>Mass Delete</button>
-      </div>
+      <div className="border"></div>
     </div>
   )
 }
