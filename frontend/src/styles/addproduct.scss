@@ -1,0 +1,21 @@
+.add-Product {
+    .input-container {
+        padding: 0 10px 10px 0;
+    }
+
+    label {
+        margin-right: 5px;
+    }
+
+    input {
+        height: 30px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .furniture{
+        display: flex;
+        flex-direction: column;
+    }
+}

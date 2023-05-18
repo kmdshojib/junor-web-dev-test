@@ -1,9 +1,10 @@
 import React from 'react'
 import '../../styles/atoms.scss';
 
-const Button = ({ children, onClick }) => {
+
+const Button = ({ children, onClick,type }) => {
     return (
-        <button onClick={onClick} className='button'>{children}</button>
+        <button type={type} onClick={onClick} className='button'>{children}</button>
     )
 }
 

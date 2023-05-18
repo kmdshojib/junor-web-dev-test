@@ -1,12 +1,12 @@
 import React from 'react'
 import '../../styles/headerContainer.scss'
-const Header = ({ children }) => {
+const Header = ({ children,title }) => {
 
   return (
     <div>
       <div className='header-container'>
         <div>
-          <h2>Product List</h2>
+          <h2>{title}</h2>
         </div>
         <div className='btn-container'>
           {children}

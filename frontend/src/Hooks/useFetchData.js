@@ -2,35 +2,36 @@ import { useEffect, useState } from "react";
 
 export const useFetchData = (url) => {
     const [data, setData] = useState(null);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-  
+
     const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error('Request failed');
+        try {
+            setLoading(true);
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Request failed');
+            }
+            const json = await response.json();
+            setData(json);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
         }
-        const json = await response.json();
-        setData(json);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
     };
-  
     useEffect(() => {
-      fetchData();
-    }, );
-  
+        fetchData();
+        // eslint-disable-next-line
+    }, [url]);
+
     const refetchData = () => {
-      setLoading(true);
-      fetchData();
+        setLoading(true);
+        fetchData();
     };
-  
+
     return { data, isLoading, error, refetchData };
-  };
+};
 
 export const usePostData = () => {
     const [isLoading, setLoading] = useState(false);
