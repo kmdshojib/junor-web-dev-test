@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useFetchData, usePostData } from '../Hooks/useFetchData';
 
 import '../styles/addproduct.scss'
+import useTitle from '../Hooks/useTitle';
 const AddProduct = () => {
-    const { data } = useFetchData("http://localhost/scandiweb-test/api/getCategories.php");
-    const { postData } = usePostData()
+    useTitle("Add Product");
+    const { data } = useFetchData("http://phprest.atwebpages.com/api/getCategories.php");
+    const { postData, response } = usePostData()
     const [selectedType, setSelectedType] = useState('');
     const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ const AddProduct = () => {
         setSelectedType(event.target.value);
     };
 
-    const handlePostProduct = (e) => {
+    const handlePostProduct = async (e) => {
         e.preventDefault();
         const form = e.target;
         const sku = form.sku.value;
@@ -53,9 +55,17 @@ const AddProduct = () => {
             data.weight = weight;
         }
 
-        console.log(data);
 
-        postData('http://localhost/scandiweb-test/api/postProducts.php', data)
+        try {
+            postData('http://phprest.atwebpages.com/api/postProducts.php', data)
+            response &&
+                form.reset();
+            navigate("/");
+
+        } catch (err) {
+            console.error(err);
+            alert(response.message);
+        }
     };
 
     return (
@@ -65,7 +75,7 @@ const AddProduct = () => {
                     <Button type="submit">Save</Button>
                     <Button onClick={() => navigate("/")}>Cancel</Button>
                 </Header>
-                <div>
+                <div className='add-product-container'>
                     <div className='input-container'>
                         <label className='input-label' htmlFor='sku'>SKU:</label>
                         <input name='sku' type='text' placeholder='#sku' required />

@@ -22,9 +22,10 @@ $product->width = isset($data->width) ? $data->width : null;
 $product->weight = isset($data->weight) ? $data->weight : null;
 
 if ($product->postProducts()) {
-    echo json_encode(
-        array('message' => 'Your product has been created successfully')
-    );
+    $response = array('message' => 'Your product has been created successfully');
+    http_response_code(200);
+    echo json_encode($response);
+
 } else {
     echo json_encode(
         array('message' => 'Something went wrong')

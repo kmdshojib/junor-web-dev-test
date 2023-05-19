@@ -1,7 +1,14 @@
 .home-container {
-    .no-data-found {
+    .data-notfound-container {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+
+        margin-top: 15%;
+        .no-data-found {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 }

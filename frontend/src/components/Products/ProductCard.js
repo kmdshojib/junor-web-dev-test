@@ -10,7 +10,7 @@ const ProductCard = ({ sku, name, price, onChange, value, children }) => {
             <div className='name-container'>
                 <div className='name'>{sku} </div>
                 <div className='name'>{name}</div>
-                <div className='name'>Price: {price}$</div>
+                <div className='name'>{price}$</div>
                 <div>{children}</div>
             </div>
         </div>

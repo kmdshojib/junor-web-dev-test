@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export const useFetchData = (url) => {
     const [data, setData] = useState(null);
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const fetchData = async () => {
@@ -20,13 +20,13 @@ export const useFetchData = (url) => {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchData();
-        // eslint-disable-next-line
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
 
     const refetchData = () => {
-        setLoading(true);
         fetchData();
     };
 
@@ -36,6 +36,7 @@ export const useFetchData = (url) => {
 export const usePostData = () => {
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [response, setResponse] = useState(null);
 
     const postData = async (url, data) => {
         setLoading(true);
@@ -54,6 +55,8 @@ export const usePostData = () => {
                 throw new Error('Failed to post data');
             }
 
+            const responseData = await response.json();
+            setResponse(responseData);
             setLoading(false);
         } catch (error) {
             setError(error);
@@ -61,8 +64,9 @@ export const usePostData = () => {
         }
     };
 
-    return { isLoading, error, postData };
+    return { isLoading, error, response, postData };
 };
+
 
 export const useDeleteData = () => {
     const [isLoading, setLoading] = useState(false);

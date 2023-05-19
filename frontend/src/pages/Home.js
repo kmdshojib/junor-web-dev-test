@@ -5,9 +5,12 @@ import Button from '../components/atoms/Button';
 import '../styles/home.scss'
 import { useDeleteData, useFetchData } from '../Hooks/useFetchData';
 import { useNavigate } from 'react-router-dom';
+import useTitle from '../Hooks/useTitle';
+import Spinner from '../components/spinner/Spinner';
 
 const Home = () => {
-    const { data, isLoading, refetchData } = useFetchData("http://localhost/scandiweb-test/api/getProducts.php");
+    useTitle("Home")
+    const { data, isLoading, refetchData } = useFetchData("http://phprest.atwebpages.com/api/getProducts.php");
 
     const [arr, setArr] = useState([]);
     const navigate = useNavigate()
@@ -30,14 +33,14 @@ const Home = () => {
                 const data = {
                     ids: ids,
                 };
-                await deleteData('http://localhost/scandiweb-test/api/deleteProducts.php', data);
+                await deleteData('http://phprest.atwebpages.com/api/deleteProducts.php', data);
                 refetchData();
             }
         } catch (error) {
             console.error({ error })
         }
     };
-    console.log(data)
+
     return (
         <div className='home-container'>
             <Header title="Product List">
@@ -45,12 +48,13 @@ const Home = () => {
                 <Button onClick={handleDelete}>Mass Delete</Button>
             </Header>
             {
-                data?.data ? <Products
+                isLoading ? <Spinner /> : data?.data.length > 0 ? <Products
                     data={data}
-                    isLoading={isLoading}
                     handleChange={handleChange}
                 /> :
-                    <div className='no-data-found'>No Product found please add product </div>
+                    <div className='data-notfound-container'>
+                        <div className='no-data-found'>No Product found please add product </div>
+                    </div>
             }
         </div>
     );
