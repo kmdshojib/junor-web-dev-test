@@ -9,6 +9,7 @@ import useTitle from '../Hooks/useTitle';
 const AddProduct = () => {
     useTitle("Add Product");
     const { data } = useFetchData("http://phprest.atwebpages.com/api/getCategories.php");
+    const { refetchData } = useFetchData("http://phprest.atwebpages.com/api/getProducts.php");
     const { postData, response } = usePostData()
     const [selectedType, setSelectedType] = useState('');
     const navigate = useNavigate();
@@ -58,8 +59,8 @@ const AddProduct = () => {
 
         try {
             postData('http://phprest.atwebpages.com/api/postProducts.php', data)
-            response &&
-                form.reset();
+            response && form.reset();
+            refetchData();
             navigate("/");
 
         } catch (err) {

@@ -48,7 +48,7 @@ const Home = () => {
                 <Button onClick={handleDelete}>Mass Delete</Button>
             </Header>
             {
-                isLoading ? <Spinner /> : data?.data.length > 0 ? <Products
+                isLoading ? <Spinner /> : data?.data?.length > 0 ? <Products
                     data={data}
                     handleChange={handleChange}
                 /> :
