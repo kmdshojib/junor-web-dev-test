@@ -8,8 +8,10 @@ import '../styles/addproduct.scss'
 import useTitle from '../Hooks/useTitle';
 const AddProduct = () => {
     useTitle("Add Product");
-    const { data } = useFetchData("http://phprest.atwebpages.com/api/getCategories.php");
-    const { refetchData } = useFetchData("http://phprest.atwebpages.com/api/getProducts.php");
+    const categories = "http://phprest.atwebpages.com/api/getCategories.php";
+    const { data } = useFetchData(categories);
+    const getProduct = "http://phprest.atwebpages.com/api/getProducts.php";
+    const { refetchData } = useFetchData(getProduct);
     const { postData, response } = usePostData()
     const [selectedType, setSelectedType] = useState('');
     const navigate = useNavigate();
@@ -56,17 +58,16 @@ const AddProduct = () => {
             data.weight = weight;
         }
 
-
-        try {
-            postData('http://phprest.atwebpages.com/api/postProducts.php', data)
-            response && form.reset();
-            refetchData();
-            navigate("/");
-
-        } catch (err) {
-            console.error(err);
-            alert(response.message);
-        }
+        fetch('http://phprest.atwebpages.com/api/postProducts.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then(res => {
+            res && refetchData();
+            res && navigate("/")
+        }).catch(err => console.log(err));
     };
 
     return (

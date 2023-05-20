@@ -10,7 +10,8 @@ import Spinner from '../components/spinner/Spinner';
 
 const Home = () => {
     useTitle("Home")
-    const { data, isLoading, refetchData } = useFetchData("http://phprest.atwebpages.com/api/getProducts.php");
+    const getData = "http://phprest.atwebpages.com/api/getProducts.php";
+    const { data, isLoading, refetchData } = useFetchData(getData);
 
     const [arr, setArr] = useState([]);
     const navigate = useNavigate()
@@ -27,13 +28,14 @@ const Home = () => {
     const { deleteData } = useDeleteData();
 
     const handleDelete = async () => {
+        const deleteDataURl = 'http://phprest.atwebpages.com/api/deleteProducts.php'
         try {
             if (arr.length > 0) {
                 const ids = arr.map((num) => parseInt(num.trim(), 10));
                 const data = {
                     ids: ids,
                 };
-                await deleteData('http://phprest.atwebpages.com/api/deleteProducts.php', data);
+                await deleteData(deleteDataURl, data);
                 refetchData();
             }
         } catch (error) {
